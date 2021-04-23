@@ -11,10 +11,21 @@ const pageModel: Item = {
   name: 'app-container',
   properties: {},
   children: [{
-    name: 'todo-journey',
+    name: "bb-deck-container-ang-_-48a2b14d9c5f",
     properties: {
-      classId: 'SourceJourneyBundleModule',
+      classId: "DeckContainerComponent",
     },
+    children: [{
+      name: 'source-journey',
+      properties: {
+        classId: 'SourceJourneyBundleModule',
+      },
+    }, {
+      name: 'dest-journey',
+      properties: {
+        classId: 'DestinationJourneyBundleModule',
+      },
+    }]
   }],
 };
 
