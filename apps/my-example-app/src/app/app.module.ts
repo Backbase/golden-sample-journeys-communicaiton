@@ -9,12 +9,10 @@ import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { bundlesDefinitions } from './bundle-definitions';
-import { DeckContainerModule } from '@backbase/universal-ang';
+import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-ang';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     StoreModule.forRoot({}),
@@ -24,9 +22,10 @@ import { DeckContainerModule } from '@backbase/universal-ang';
       lazyModules: bundlesDefinitions,
     }),
     DeckContainerModule,
-    RouterModule.forRoot([], { initialNavigation: "disabled", useHash: true })
+    PanelContainerModule,
+    RouterModule.forRoot([], { initialNavigation: 'disabled', useHash: true }),
   ],
-  providers: [...environment.mockProviders || []],
-  bootstrap: [AppComponent]
+  providers: [...(environment.mockProviders || [])],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

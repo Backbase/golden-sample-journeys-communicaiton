@@ -7,11 +7,13 @@ import { RouterModule } from '@angular/router';
   declarations: [SourceJourneyComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([{
-      path: '',
-      component: SourceJourneyComponent,
-    }]),
+    RouterModule.forChild([
+      {
+        path: '',
+        component: SourceJourneyComponent,
+      },
+    ]),
   ],
-  exports: [SourceJourneyComponent]
+  exports: [SourceJourneyComponent],
 })
-export class SourceJourneyModule { }
+export class SourceJourneyModule {}

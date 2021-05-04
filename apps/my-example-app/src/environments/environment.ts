@@ -10,23 +10,46 @@ const services: ExternalServices = {};
 const pageModel: Item = {
   name: 'app-container',
   properties: {},
-  children: [{
-    name: "bb-deck-container-ang-_-48a2b14d9c5f",
-    properties: {
-      classId: "DeckContainerComponent",
+  children: [
+    {
+      name: 'bb-deck-container-ang-_-48a2b14d9c5f',
+      properties: {
+        classId: 'DeckContainerComponent',
+      },
+      children: [
+        {
+          name: 'source-panel',
+          properties: {
+            classId: 'PanelContainerComponent',
+            route: 'source-journey',
+          },
+          children: [
+            {
+              name: 'source-journey',
+              properties: {
+                classId: 'SourceJourneyBundleModule',
+              },
+            },
+          ],
+        },
+        {
+          name: 'dest-panel',
+          properties: {
+            classId: 'PanelContainerComponent',
+            route: 'dest-journey',
+          },
+          children: [
+            {
+              name: 'dest-journey',
+              properties: {
+                classId: 'DestinationJourneyBundleModule',
+              },
+            },
+          ],
+        },
+      ],
     },
-    children: [{
-      name: 'source-journey',
-      properties: {
-        classId: 'SourceJourneyBundleModule',
-      },
-    }, {
-      name: 'dest-journey',
-      properties: {
-        classId: 'DestinationJourneyBundleModule',
-      },
-    }]
-  }],
+  ],
 };
 
 export const environment: Environment = {

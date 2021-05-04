@@ -1,20 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Optional } from '@angular/core';
+import { ISourceJourneyCommunicationService } from './communication.service';
 
 @Component({
   selector: 'bb-source-journey',
-  template: `
-    <p>
-      source-journey works! 111
-    </p>
-  `,
-  styles: [
-  ]
+  template: `<button (click)="onClick()">Let's talk</button>`,
 })
-export class SourceJourneyComponent implements OnInit {
+export class SourceJourneyComponent {
+  constructor(@Optional() private readonly service: ISourceJourneyCommunicationService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  onClick() {
+    if (this.service) {
+      this.service.navigate('ABC');
+    } else {
+      console.warn('Navigation service not provided');
+    }
   }
-
 }

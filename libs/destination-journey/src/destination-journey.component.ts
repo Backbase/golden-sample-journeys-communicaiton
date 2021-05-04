@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'bb-destination-journey',
   template: `
-    <p>
-      destination-journey works!222
-    </p>
+    Retrieved identifier: {{ identifier }} <br />
+    Retrieved type: {{ type }}
   `,
-  styles: [
-  ]
 })
-export class DestinationJourneyComponent implements OnInit {
+export class DestinationJourneyComponent {
+  identifier: string;
+  type: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private readonly router: Router) {
+    console.log(this.router.getCurrentNavigation(), window.history.state);
+    //const state = this.router.getCurrentNavigation()?.extras.state;
+    const state = window.history.state;
+    this.identifier = state?.identifier || 'null';
+    this.type = state?.type || 'null';
   }
-
 }
