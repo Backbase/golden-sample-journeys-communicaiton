@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 export interface DestinationJourneyInput {
@@ -6,12 +5,11 @@ export interface DestinationJourneyInput {
   type: string;
 }
 
-@Injectable()
 export class DestinationJourneyCommunicationService {
-  constructor(private readonly url: string, private readonly router: Router) {}
+  constructor(private readonly journeyUrl: string, private readonly router: Router) {}
 
   navigate(data: DestinationJourneyInput) {
-    this.router.navigate([this.url], {
+    this.router.navigate([this.journeyUrl], {
       state: {
         identifier: data.id,
         type: data.type,
