@@ -1,2 +1,2 @@
 export { DestinationJourneyModule } from './src/destination-journey.module';
-export { DestinationJourneyCommunicationService, DestinationJourneyInput } from './src/communication.service';
+export { DestinationJourneyNavigationState } from './src/destination-journey.component';
