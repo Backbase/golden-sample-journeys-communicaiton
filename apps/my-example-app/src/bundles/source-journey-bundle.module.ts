@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import { DestinationJourneyCommunicationService } from '@backbase/destination-journey';
-import { SourceJourneyModule, ISourceJourneyCommunicationService } from '@backbase/source-journey';
+import { SourceJourneyModule, ISourceJourneyEventService } from '@backbase/source-journey';
 
-export class NavigationService implements ISourceJourneyCommunicationService {
-  readonly destinationNavigationService: DestinationJourneyCommunicationService;
+export class EventService implements ISourceJourneyEventService {
 
-  constructor(readonly router: Router) {
-    this.destinationNavigationService = new DestinationJourneyCommunicationService('dest-journey', router);
-  }
+  constructor(readonly router: Router) {}
 
-  navigate(id: string) {
-    this.destinationNavigationService.navigate({
+  talk(id: string) {
+    this.router.navigate(['dest-journey'], {state: {
       id,
       type: 'Type1',
-    });
+    }});
   }
 }
 @NgModule({
@@ -22,8 +18,8 @@ export class NavigationService implements ISourceJourneyCommunicationService {
   imports: [SourceJourneyModule],
   providers: [
     {
-      provide: ISourceJourneyCommunicationService,
-      useClass: NavigationService,
+      provide: ISourceJourneyEventService,
+      useClass: EventService,
     },
   ],
 })
