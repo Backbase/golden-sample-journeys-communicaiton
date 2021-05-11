@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-export interface DestinationJourneyNavigationExtras {
+export interface DestinationJourneyNavigationState {
   identifier: string;
   type: string;
 }
@@ -20,7 +20,7 @@ export class DestinationJourneyComponent {
   constructor(private readonly router: Router) {
     console.log(this.router.getCurrentNavigation(), window.history.state);
     //const state = this.router.getCurrentNavigation()?.extras.state;
-    const state = window.history.state as DestinationJourneyNavigationExtras | undefined;
+    const state = window.history.state as DestinationJourneyNavigationState | undefined;
     this.identifier = state?.identifier || 'null';
     this.type = state?.type || 'null';
   }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import { DestinationJourneyNavigationExtras } from '@backbase/destination-journey';
+import { DestinationJourneyNavigationState } from '@backbase/destination-journey';
 import { SourceJourneyModule, ISourceJourneyEventService } from '@backbase/source-journey';
 
 export class EventService implements ISourceJourneyEventService {
@@ -8,7 +8,7 @@ export class EventService implements ISourceJourneyEventService {
   constructor(readonly router: Router) {}
 
   talk(id: string) {
-    this.router.navigate(['dest-journey'], {state: <DestinationJourneyNavigationExtras>{
+    this.router.navigate(['dest-journey'], {state: <DestinationJourneyNavigationState>{
       identifier: id,
       type: 'Type1',
     }});
