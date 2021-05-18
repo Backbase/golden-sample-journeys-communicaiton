@@ -8,7 +8,7 @@ export interface DestinationJourneyNavigationState {
 
 type TalkClient = Observable<DestinationJourneyNavigationState | null>;
 
-export const destinationJourneyDataToken = new InjectionToken<Observable<DestinationJourneyNavigationState | null>>(
+export const DESTINATION_JOURNEY_DATA = new InjectionToken<TalkClient>(
   'bb-destination-journey Data',
 );
 
@@ -24,7 +24,7 @@ export class DestinationJourneyComponent {
   type: string | undefined;
 
   constructor(
-    @Optional() @Inject(destinationJourneyDataToken) dataProvider: TalkClient,
+    @Optional() @Inject(DESTINATION_JOURNEY_DATA) dataProvider: TalkClient,
     private cd: ChangeDetectorRef,
   ) {
     if (!dataProvider) {
