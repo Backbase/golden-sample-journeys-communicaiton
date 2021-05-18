@@ -10,6 +10,9 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { bundlesDefinitions } from './bundle-definitions';
 import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-ang';
+import { JourneyDataProvider } from '../bundles/destination-journey-data-provider';
+import { sourceJourneyDataToken } from '@backbase/source-journey';
+import { destinationJourneyDataToken } from '@backbase/destination-journey';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +28,18 @@ import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-a
     PanelContainerModule,
     RouterModule.forRoot([], { initialNavigation: 'disabled', useHash: true }),
   ],
-  providers: [...(environment.mockProviders || [])],
+  providers: [
+    ...(environment.mockProviders || []),
+    JourneyDataProvider,
+    {
+      provide: sourceJourneyDataToken,
+      useExisting: JourneyDataProvider,
+    },
+    {
+      provide: destinationJourneyDataToken,
+      useExisting: JourneyDataProvider,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,18 +1,23 @@
-import { Component, Optional } from '@angular/core';
-import { ISourceJourneyEventService } from './event.service';
+import { Component, Inject, InjectionToken, Optional } from '@angular/core';
+import { Subject } from 'rxjs';
+
+type TalkService = Subject<{ identifier: string; type: string }>;
+export const sourceJourneyDataToken = new InjectionToken<Subject<{ identifier: string; type: string }>>(
+  'bb-source-journey Data',
+);
 
 @Component({
   selector: 'bb-source-journey',
   template: `<button (click)="onClick()">Let's talk</button>`,
 })
 export class SourceJourneyComponent {
-  constructor(@Optional() private readonly service: ISourceJourneyEventService) {}
+  constructor(@Optional() @Inject(sourceJourneyDataToken) private talkService: TalkService) {}
 
   onClick() {
-    if (this.service) {
-      this.service.talk('ABC');
+    if (this.talkService) {
+      this.talkService.next({ identifier: 'ABC', type: 'Test' });
     } else {
-      console.warn('Navigation service not provided');
+      console.warn('Talk service not provided');
     }
   }
 }
