@@ -2,9 +2,7 @@ import { Component, Inject, InjectionToken, Optional } from '@angular/core';
 import { Subject } from 'rxjs';
 
 type TalkService = Subject<{ identifier: string; type: string }>;
-export const SOURCE_JOURNEY_DATA = new InjectionToken<Subject<{ identifier: string; type: string }>>(
-  'bb-source-journey Data',
-);
+export const SOURCE_JOURNEY_DATA = new InjectionToken<TalkService>('bb-source-journey Data');
 
 @Component({
   selector: 'bb-source-journey',

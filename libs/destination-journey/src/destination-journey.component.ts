@@ -8,9 +8,7 @@ export interface DestinationJourneyNavigationState {
 
 type TalkClient = Observable<DestinationJourneyNavigationState | null>;
 
-export const DESTINATION_JOURNEY_DATA = new InjectionToken<TalkClient>(
-  'bb-destination-journey Data',
-);
+export const DESTINATION_JOURNEY_DATA = new InjectionToken<TalkClient>('bb-destination-journey Data');
 
 @Component({
   selector: 'bb-destination-journey',
@@ -23,33 +21,18 @@ export class DestinationJourneyComponent {
   identifier: string | undefined;
   type: string | undefined;
 
-  constructor(
-    @Optional() @Inject(DESTINATION_JOURNEY_DATA) dataProvider: TalkClient,
-    private cd: ChangeDetectorRef,
-  ) {
+  constructor(@Optional() @Inject(DESTINATION_JOURNEY_DATA) dataProvider: TalkClient) {
     if (!dataProvider) {
       throw new Error();
     }
     dataProvider.subscribe((data) => {
-      if(data){
+      if (data) {
         console.log(data);
         this.identifier = data.identifier;
         this.type = data.type;
-      }else {
-        console.log('looks like you landed on this page with out passing the required data did you refresh the page!')
+      } else {
+        console.log('looks like you landed on this page with out passing the required data did you refresh the page!');
       }
-
-      // cd.markForCheck()
     });
-    // console.log(this.route.data, window.history.state);
-    // this.route.params.subscribe(console.log);
-    // this.route.queryParams.subscribe(console.log);
-    // this.route.data.subscribe(console.log);
-    // this.route.data.subscribe((data) => {
-    //   this.identifier = data.identifier;
-    //   this.type = data.type;
-    // });
-    // //const state = this.router.getCurrentNavigation()?.extras.state;
-    // const state = window.history.state as DestinationJourneyNavigationState | undefined;
   }
 }
