@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, InjectionToken, Optional } from '@angular/core';
+import { Component, Inject, InjectionToken, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface DestinationJourneyNavigationState {
@@ -23,7 +23,7 @@ export class DestinationJourneyComponent {
 
   constructor(@Optional() @Inject(DESTINATION_JOURNEY_DATA) dataProvider: TalkClient) {
     if (!dataProvider) {
-      throw new Error();
+      throw new Error("Oops! you need to provide an implementation for `DESTINATION_JOURNEY_DATA`");
     }
     dataProvider.subscribe((data) => {
       if (data) {
