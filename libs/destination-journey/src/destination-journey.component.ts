@@ -1,38 +1,48 @@
-import { Component, Inject, InjectionToken, Optional } from '@angular/core';
-import { Observable } from 'rxjs';
-
-export interface DestinationJourneyNavigationState {
-  identifier: string;
-  type: string;
+import { Component, Inject, InjectionToken, Input, Optional } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+export interface DestinationJourneyComponentApi {
+  setPayload: string;
 }
 
-type TalkClient = Observable<DestinationJourneyNavigationState | null>;
+export interface Communicator<API> {
+  init(api: API): void;
+}
 
-export const DESTINATION_JOURNEY_DATA = new InjectionToken<TalkClient>('bb-destination-journey Data');
+export type CommunicationService = Communicator<{ api: DestinationJourneyComponentApi; route: ActivatedRoute }>;
+
+export const DESTINATION_JOURNEY_COMMUNICATOR = new InjectionToken<CommunicationService>(
+  'bb-destination-journey Communicator',
+);
+
+// we need to find easier way to extract an interface from our inputs and outputs
 
 @Component({
   selector: 'bb-destination-journey',
   template: `
-    Retrieved identifier: {{ identifier }} <br />
-    Retrieved type: {{ type }}
+    Retrieved identifier: {{ identifier }}
+    <button (click)="nothing()">nothing</button>
   `,
 })
-export class DestinationJourneyComponent {
+export class DestinationJourneyComponent implements DestinationJourneyComponentApi {
   identifier: string | undefined;
   type: string | undefined;
 
-  constructor(@Optional() @Inject(DESTINATION_JOURNEY_DATA) dataProvider: TalkClient) {
-    if (!dataProvider) {
-      throw new Error("Oops! you need to provide an implementation for `DESTINATION_JOURNEY_DATA`");
+  @Input()
+  public set setPayload(id: string) {
+    this.identifier = id;
+  }
+
+  constructor(
+    @Optional() @Inject(DESTINATION_JOURNEY_COMMUNICATOR) communicator: CommunicationService,
+    route: ActivatedRoute,
+  ) {
+    if (communicator) {
+      communicator.init({ api: this, route });
     }
-    dataProvider.subscribe((data) => {
-      if (data) {
-        console.log(data);
-        this.identifier = data.identifier;
-        this.type = data.type;
-      } else {
-        console.log('looks like you landed on this page with out passing the required data did you refresh the page!');
-      }
-    });
+    console.log('DestinationJourneyComponent', route);
+  }
+
+  nothing() {
+    console.log('nothing');
   }
 }

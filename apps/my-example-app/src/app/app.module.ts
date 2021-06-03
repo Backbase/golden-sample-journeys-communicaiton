@@ -1,18 +1,17 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { DESTINATION_JOURNEY_COMMUNICATOR } from '@backbase/destination-journey';
 import { BackbaseCoreModule } from '@backbase/foundation-ang/core';
-import { environment } from '../environments/environment';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { bundlesDefinitions } from './bundle-definitions';
+import { SOURCE_JOURNEY_COM } from '@backbase/source-journey';
 import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-ang';
-import { JourneyDataProvider } from '../communication/journey-data-provider';
-import { sourceJourneyDataToken } from '@backbase/source-journey';
-import { destinationJourneyDataToken } from '@backbase/destination-journey';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
+import { bundlesDefinitions } from './bundle-definitions';
+import { SourceDestinationCommunication } from '../communication/SourceDestinationCommunication';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,14 +29,14 @@ import { destinationJourneyDataToken } from '@backbase/destination-journey';
   ],
   providers: [
     ...(environment.mockProviders || []),
-    JourneyDataProvider,
+    SourceDestinationCommunication,
     {
-      provide: sourceJourneyDataToken,
-      useExisting: JourneyDataProvider,
+      provide: SOURCE_JOURNEY_COM,
+      useExisting: SourceDestinationCommunication,
     },
     {
-      provide: destinationJourneyDataToken,
-      useExisting: JourneyDataProvider,
+      provide: DESTINATION_JOURNEY_COMMUNICATOR,
+      useExisting: SourceDestinationCommunication,
     },
   ],
   bootstrap: [AppComponent],
