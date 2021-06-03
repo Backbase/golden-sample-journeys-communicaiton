@@ -1,7 +1,7 @@
 import { Component, Inject, InjectionToken, Input, Optional } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 export interface DestinationJourneyComponentApi {
-  setPayload: string;
+  setPayload(id: string): void;
 }
 
 export interface Communicator<API> {
@@ -23,7 +23,7 @@ export const DESTINATION_JOURNEY_COMMUNICATOR = new InjectionToken<Communication
     <button (click)="nothing()">nothing</button>
   `,
 })
-export class DestinationJourneyComponent implements DestinationJourneyComponentApi {
+export class DestinationJourneyComponent {
   identifier: string | undefined;
   type: string | undefined;
 
@@ -38,8 +38,8 @@ export class DestinationJourneyComponent implements DestinationJourneyComponentA
   ) {
     if (communicator) {
       communicator.init({
-        api: {
-          set setPayload(id: string) {
+        api: {   
+          setPayload: (id) => {
             this.setPayload = id;
           },
         },

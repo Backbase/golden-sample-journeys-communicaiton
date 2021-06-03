@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { DESTINATION_JOURNEY_COMMUNICATOR } from '@backbase/destination-journey';
 import { BackbaseCoreModule } from '@backbase/foundation-ang/core';
-import { SOURCE_JOURNEY_COM } from '@backbase/source-journey';
+import { CommunicationServiceDefault } from '@backbase/source-journey';
 import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-ang';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -31,7 +31,7 @@ import { SourceDestinationCommunication } from '../communication/SourceDestinati
     ...(environment.mockProviders || []),
     SourceDestinationCommunication,
     {
-      provide: SOURCE_JOURNEY_COM,
+      provide: CommunicationServiceDefault,
       useExisting: SourceDestinationCommunication,
     },
     {

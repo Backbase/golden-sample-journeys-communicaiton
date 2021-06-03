@@ -8,12 +8,13 @@ export class SourceDestinationCommunication implements SourceJourneyCommunicatio
   constructor(private router: Router) {}
 
   init(data: { api: DestinationJourneyComponentApi; route: ActivatedRoute }): void {
-    data.api.setPayload = data.route.snapshot.params.id;
+    data.api.setPayload(data.route.snapshot.params.id);
   }
 
   event(): void {
     console.log('source journey event triggered');
   }
+
   eventWithPayload(id: string): void {
     this.router.navigate(['dest-journey', { id }]);
   }
