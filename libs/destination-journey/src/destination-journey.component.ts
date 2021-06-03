@@ -37,9 +37,15 @@ export class DestinationJourneyComponent implements DestinationJourneyComponentA
     route: ActivatedRoute,
   ) {
     if (communicator) {
-      communicator.init({ api: this, route });
+      communicator.init({
+        api: {
+          set setPayload(id: string) {
+            this.setPayload = id;
+          },
+        },
+        route,
+      });
     }
-    console.log('DestinationJourneyComponent', route);
   }
 
   nothing() {
