@@ -1,17 +1,7 @@
 import { Component, Optional } from '@angular/core';
-
-export interface CommunicationService {
-  event(): void;
-  eventWithPayload(id: string): void;
-}
-
-export class CommunicationServiceDefault implements CommunicationService {
-  event(): void {
-    // This is intentional
-  }
-  eventWithPayload(_: string): void {
-    // This is intentional
-  }
+export abstract class CommunicationService {
+  abstract event(): void;
+  abstract eventWithPayload(_: string): void;
 }
 
 @Component({
@@ -20,15 +10,17 @@ export class CommunicationServiceDefault implements CommunicationService {
     <button (click)="onClickWithPayload()">Let's talk with voice</button> `,
 })
 export class SourceJourneyComponent {
-  constructor(@Optional() private communicationService: CommunicationServiceDefault) {
-    this.communicationService = this.communicationService || new CommunicationServiceDefault();
-  }
+  constructor(@Optional() private communicationService: CommunicationService) {}
 
   onClick() {
-    this.communicationService.event();
+    if (this.communicationService) {
+      this.communicationService.event();
+    }
   }
 
   onClickWithPayload() {
-    this.communicationService.eventWithPayload('123');
+    if (this.communicationService) {
+      this.communicationService.eventWithPayload('123');
+    }
   }
 }

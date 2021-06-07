@@ -38,7 +38,7 @@ export class DestinationJourneyComponent {
   ) {
     if (communicator) {
       communicator.init({
-        api: {   
+        api: {
           setPayload: (id) => {
             this.setPayload = id;
           },
