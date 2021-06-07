@@ -5,10 +5,11 @@ import { CommunicationService as SourceJourneyCommunicationService } from '@back
 
 @Injectable()
 export class SourceDestinationCommunication implements SourceJourneyCommunicationService, CommunicationService {
+  id:string | undefined;
   constructor(private router: Router) {}
 
-  init(data: { api: DestinationJourneyComponentApi; route: ActivatedRoute }): void {
-    data.api.setPayload(data.route.snapshot.params.id);
+  init(api: DestinationJourneyComponentApi): void {
+    api.setPayload(this.id!);
   }
 
   event(): void {
@@ -16,6 +17,7 @@ export class SourceDestinationCommunication implements SourceJourneyCommunicatio
   }
 
   eventWithPayload(id: string): void {
-    this.router.navigate(['dest-journey', { id }]);
+    this.router.navigate(['dest-journey']);
+    this.id = id;
   }
 }
