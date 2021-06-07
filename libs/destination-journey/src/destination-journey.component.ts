@@ -28,7 +28,7 @@ export class DestinationJourneyComponent {
   type: string | undefined;
 
   @Input()
-  public set setPayload(id: string) {
+  public set payload(id: string) {
     this.identifier = id;
   }
 
@@ -40,7 +40,7 @@ export class DestinationJourneyComponent {
       communicator.init({
         api: {
           setPayload: (id) => {
-            this.setPayload = id;
+            this.payload = id;
           },
         },
         route,
