@@ -1,15 +1,17 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { DESTINATION_JOURNEY_COMMUNICATOR } from '@backbase/destination-journey';
 import { BackbaseCoreModule } from '@backbase/foundation-ang/core';
-import { environment } from '../environments/environment';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { bundlesDefinitions } from './bundle-definitions';
+import { CommunicationService } from '@backbase/source-journey';
 import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-ang';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
+import { bundlesDefinitions } from './bundle-definitions';
+import { SourceDestinationCommunication } from '../communication/SourceDestinationCommunication';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +27,18 @@ import { DeckContainerModule, PanelContainerModule } from '@backbase/universal-a
     PanelContainerModule,
     RouterModule.forRoot([], { initialNavigation: 'disabled', useHash: true }),
   ],
-  providers: [...(environment.mockProviders || [])],
+  providers: [
+    ...(environment.mockProviders || []),
+    SourceDestinationCommunication,
+    {
+      provide: CommunicationService,
+      useExisting: SourceDestinationCommunication,
+    },
+    {
+      provide: DESTINATION_JOURNEY_COMMUNICATOR,
+      useExisting: SourceDestinationCommunication,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

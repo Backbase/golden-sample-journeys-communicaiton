@@ -1,27 +1,47 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-export interface DestinationJourneyNavigationState {
-  identifier: string;
-  type: string;
+import { Component, Inject, InjectionToken, Input, Optional } from '@angular/core';
+export interface DestinationJourneyComponentApi {
+  setPayload(id: string): void;
 }
+
+export interface Communicator<API> {
+  init(api: API): void;
+}
+
+export type CommunicationService = Communicator<DestinationJourneyComponentApi>;
+
+export const DESTINATION_JOURNEY_COMMUNICATOR = new InjectionToken<CommunicationService>(
+  'bb-destination-journey Communicator',
+);
+
+// we need to find easier way to extract an interface from our inputs and outputs
 
 @Component({
   selector: 'bb-destination-journey',
   template: `
-    Retrieved identifier: {{ identifier }} <br />
-    Retrieved type: {{ type }}
+    Retrieved identifier: {{ identifier }}
+    <button (click)="nothing()">nothing</button>
   `,
 })
 export class DestinationJourneyComponent {
-  identifier: string;
-  type: string;
+  identifier: string | undefined;
+  type: string | undefined;
 
-  constructor(private readonly router: Router) {
-    console.log(this.router.getCurrentNavigation(), window.history.state);
-    //const state = this.router.getCurrentNavigation()?.extras.state;
-    const state = window.history.state as DestinationJourneyNavigationState | undefined;
-    this.identifier = state?.identifier || 'null';
-    this.type = state?.type || 'null';
+  @Input()
+  public set payload(id: string) {
+    this.identifier = id;
+  }
+
+  constructor(@Optional() @Inject(DESTINATION_JOURNEY_COMMUNICATOR) communicator: CommunicationService) {
+    if (communicator) {
+      communicator.init({
+        setPayload: (id) => {
+          this.payload = id;
+        },
+      });
+    }
+  }
+
+  nothing() {
+    console.log('nothing');
   }
 }
