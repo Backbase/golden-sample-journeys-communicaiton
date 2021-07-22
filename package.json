@@ -62,7 +62,7 @@
     "@types/jasminewd2": "2.0.3",
     "@types/node": "^10.17.17",
     "allure-commandline": "^2.13.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "chrome-launcher": "^0.11.2",
     "codelyzer": "5.2.0",
